@@ -1,18 +1,30 @@
 package org.launchcode.techjobs.console;
 
+
+// java.util.*;      can use this as well
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Collections;
+import java.util.Arrays;
+
+import static org.launchcode.techjobs.console.Practice.sleepIn;
 
 /**
  * Created by LaunchCode
+ *
+ *
  */
+
+// Tech jobs contains three methods   main,  getUserSelection and printJobs
+
 public class TechJobs {
 
     private static Scanner in = new Scanner(System.in);
 
-    public static void main (String[] args) {
+    public static void main(String[] args) {
 
+        // local variables columnChoices and actionChoices
         // Initialize our field map with key/name pairs
         HashMap<String, String> columnChoices = new HashMap<>();
         columnChoices.put("core competency", "Skill");
@@ -27,14 +39,41 @@ public class TechJobs {
         actionChoices.put("list", "List");
 
         System.out.println("Welcome to LaunchCode's TechJobs App!");
+        //System.out.println(columnChoices.size());
+        //System.out.println(values);
+
+        /*int i = 0;
+        System.out.println("\n->Inc/Dec-rementation");
+        // The ++ and -- operators increment and decrement by 1 respectively.
+        // If they are placed before the variable, they increment then return;
+        // after the variable they return then increment.
+        System.out.println(i++); // i = 1, prints 0 (post-increment)
+        System.out.println(++i); // i = 2, prints 2 (pre-increment)
+        System.out.println(i--); // i = 1, prints 2 (post-decrement)
+        System.out.println(--i); // i = 0, prints 0 (pre-decrement)
+        */
+
+
+        /*// Convert String To Integer
+        System.out.println(sleepIn(false, true));
+        System.out.println(sleepIn(true, false));
+
+        System.out.println(sleepIn(false, false));
+        */
+
+
+
+
+
+
 
         // Allow the user to search until they manually quit
         while (true) {
-
+            // first use of getUserSelection
             String actionChoice = getUserSelection("View jobs by:", actionChoices);
 
             if (actionChoice.equals("list")) {
-
+                // second use of getUserSelection
                 String columnChoice = getUserSelection("List", columnChoices);
 
                 if (columnChoice.equals("all")) {
@@ -46,8 +85,19 @@ public class TechJobs {
                     System.out.println("\n*** All " + columnChoices.get(columnChoice) + " Values ***");
 
                     // Print list of skills, employers, etc
+                    // Arrays.sort(results);
                     for (String item : results) {
+                        // this is bonus... sort alphabetically
+                        //String [] itemlist = new String[];
+
+
+
+
+
+                        //System.out.println(item.toUpperCase());
                         System.out.println(item);
+                        //Collections.sort(item);
+                        //System.out.println(item);
                     }
                 }
 
@@ -61,14 +111,14 @@ public class TechJobs {
                 String searchTerm = in.nextLine();
 
                 if (searchField.equals("all")) {
-                    System.out.println("Search all fields not yet implemented.");
+                    printJobs(JobData.findByValue(searchTerm));
                 } else {
                     printJobs(JobData.findByColumnAndValue(searchField, searchTerm));
                 }
             }
         }
     }
-
+    // right-click on the method name , select Find Usages.. displays location where called
     // ﻿Returns the key of the selected item from the choices Dictionary
     private static String getUserSelection(String menuHeader, HashMap<String, String> choices) {
 
@@ -103,14 +153,43 @@ public class TechJobs {
                 validChoice = true;
             }
 
-        } while(!validChoice);
+        } while (!validChoice);
 
         return choiceKeys[choiceIdx];
     }
 
     // Print a list of jobs
+    //go through an ArrayList of jobs
+    //Each job is a Hashmap
     private static void printJobs(ArrayList<HashMap<String, String>> someJobs) {
+        // keys are the headers
+        if (someJobs.size() > 0) {
 
-        System.out.println("printJobs is not implemented yet");
+
+            for (HashMap<String, String> job : someJobs) {
+
+
+                System.out.println("*****");
+
+
+                for (String key : job.keySet()) {
+
+                    String value = job.get(key);
+
+                    System.out.println(key + ": " + value);
+                }
+
+                System.out.println("*****" + "\n");
+
+            }
+
+        } else {
+            System.out.println("No results");
+        }
+
+
+
+
     }
+
 }

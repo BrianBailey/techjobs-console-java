@@ -19,6 +19,7 @@ public class JobData {
     private static final String DATA_FILE = "resources/job_data.csv";
     private static Boolean isDataLoaded = false;
 
+    // all the stored data form CSV goes into allJobs variable
     private static ArrayList<HashMap<String, String>> allJobs;
 
     /**
@@ -31,9 +32,12 @@ public class JobData {
     public static ArrayList<String> findAll(String field) {
 
         // load data, if not already loaded
+        // why is load data called at top of all four methods
         loadData();
 
         ArrayList<String> values = new ArrayList<>();
+
+        //System.out.println(values);
 
         for (HashMap<String, String> row : allJobs) {
             String aValue = row.get(field);
@@ -50,7 +54,7 @@ public class JobData {
 
         // load data, if not already loaded
         loadData();
-
+        // this is in bonus section
         return allJobs;
     }
 
@@ -78,6 +82,44 @@ public class JobData {
 
             if (aValue.contains(value)) {
                 jobs.add(row);
+            }
+        }
+
+        return jobs;
+    }
+
+    // findByValue should be findAll(String)
+    //this will look very similar to findByColumnAndValue method
+    public static ArrayList<HashMap<String, String>> findByValue (String searchTerm) {
+
+        // load data, if not already loaded
+        loadData();
+
+        ArrayList<HashMap<String, String>> jobs = new ArrayList<>();
+
+        for (HashMap<String, String> job : allJobs) {
+
+            Boolean searchFound = false;
+
+            for (String key : job.keySet()) {
+                String value = job.get(key);
+
+                // ignore the case of the Strings
+                if (value.toLowerCase().contains(searchTerm.toLowerCase())) {
+                    searchFound = true;
+                }
+            }
+            // this keeps the case the same as job_data.csv
+            if (searchFound) {
+
+                HashMap<String, String> newJob = new HashMap<>();
+
+                for (String key : job.keySet()) {
+                    String value = job.get(key);
+                    newJob.put(key, value);
+                }
+
+                jobs.add(newJob);
             }
         }
 
