@@ -2,13 +2,9 @@ package org.launchcode.techjobs.console;
 
 
 // java.util.*;      can use this as well
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Scanner;
-import java.util.Collections;
-import java.util.Arrays;
+import java.util.*;
 
-import static org.launchcode.techjobs.console.Practice.sleepIn;
+
 
 /**
  * Created by LaunchCode
@@ -169,17 +165,15 @@ public class TechJobs {
             for (HashMap<String, String> job : someJobs) {
 
 
-                System.out.println("*****");
+                String jobInfo = "\n*****\n";
 
 
-                for (String key : job.keySet()) {
-
-                    String value = job.get(key);
-
-                    System.out.println(key + ": " + value);
+                for (Map.Entry<String, String> jobColumn : job.entrySet()) {
+                    jobInfo += (jobColumn.getKey() + ": " + jobColumn.getValue() + "\n");
                 }
 
-                System.out.println("*****" + "\n");
+                jobInfo += "*****" ;
+                System.out.println(jobInfo);
 
             }
 
